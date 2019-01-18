@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>首页</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/css/main.css"/>
+    <script type="text/javascript" src="/public/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/public/js/index.js"></script> 
+</head>
+<body>
+	{% if userInfo._id %}
+	<div class="rightBox" id="userInfo">
+		<div class="title"><span>用户信息</span></div>
+		<p><span class="username">{{userInfo.username}}</span></p>
+		<p><span class="info">你好，欢迎光临我的博客！</span><a href="/admin">你可以点击这里进入管理</a></p>
+		<p><a id="logout" href="javascript:;">退出</a></p>
+	</div>
+	{% else %}
+    <div class="rightBox" id="loginBox">
+    	<div class="title">登录</div>
+    	<div>
+    		<span>用户名：</span>
+    		<input placeholder="请填写用户名" type="text" name="username" value="">
+    	</div>
+    	<div>
+    		<span>密码：</span>
+    		<input placeholder="请填写密码" type="password" name="password" value="">
+    	</div>
+    	<input class="btn" type="submit" value="登录">
+    	<p class="text">还没注册？<a href="javascript:;">马上注册</a></p>
+    	<p class="colWarning textCenter"></p>
+    </div>
+    
+    <div class="rightBox" id="registerBox" style="display: none">
+    	<div class="title">注册</div>
+    	<div>
+    		<span>用户名：</span>
+    		<input type="text" name="username" value="">
+    	</div>
+    	<div>
+    		<span>密码：</span>
+    		<input type="password" name="password" value="">
+    	</div>
+    	<div>
+    		<span>确认：</span>
+    		<input type="password" name="repassword" value="">
+    	</div>
+    	<input class="btn" type="submit" value="注册">
+    	<p class="text textRight">已有账号？<a href="javascript:;">马上登录</a></p>
+    	<p class="colWarning textCenter"></p>
+    </div>
+    {% endif %}
+</body>
+</html>
