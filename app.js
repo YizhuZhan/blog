@@ -22,6 +22,8 @@ swig.setDefaults({cache: false});// 默认为true
 // 返回的对象是一个键值对，当extended为false的时候，键值对中的值就为'String'或'Array'形式，为true的时候，则可为任何数据类型。
 app.use(bodyParser.urlencoded({extended:true}));
 
+var User = require('./models/User');
+
 // cookie设置，只要用户访问该站点，就会走这个中间件
 app.use((req, res, next) => {
     req.cookies = new Cookies(req, res);
@@ -31,11 +33,17 @@ app.use((req, res, next) => {
     if(req.cookies.get('userInfo')) {
         try {
             req.userInfo = JSON.parse(req.cookies.get('userInfo'));
+            // 获取当前用户的类型，是否为管理员
+            User.findById(req.userInfo._id).then((userInfo) => {
+                req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
+                next();
+            });
         } catch(e) {
-
+            next();
         }
+    } else {
+        next();
     }
-    next();
 });
 
 app.use('/public', express.static(__dirname + '/public'))

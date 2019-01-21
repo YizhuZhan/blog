@@ -12,7 +12,11 @@
 	<div class="rightBox" id="userInfo">
 		<div class="title"><span>用户信息</span></div>
 		<p><span class="username">{{userInfo.username}}</span></p>
-		<p><span class="info">你好，欢迎光临我的博客！</span><a href="/admin">你可以点击这里进入管理</a></p>
+		{% if userInfo.isAdmin %}
+		<p><span class="info">你好，管理员！</span><a href="/admin">点击这里进入管理</a></p>
+		{% else %}
+		<p><span class="info">你好，欢迎光临我的博客！</span></p>
+		{% endif %}
 		<p><a id="logout" href="javascript:;">退出</a></p>
 	</div>
 	{% else %}
