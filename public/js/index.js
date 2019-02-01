@@ -26,8 +26,6 @@ $(function() {
 			},
 			dataType: 'json',
 			success: function(result) {
-				console.log(result);
-				
 				$registerBox.find('.colWarning').html(result.message);
 				if(!result.code) {
 					// 注册成功，result.code为0

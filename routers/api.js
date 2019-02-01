@@ -1,6 +1,8 @@
 var express = require('express');
 var User = require('../models/User');
 var router = express.Router();
+var Content = require('../models/Contents');
+
 // 统一放回格式
 var responseData;
 
@@ -70,8 +72,6 @@ router.post('/user/register', (req, res, next) => {
         responseData.message = "注册成功";
         res.json(responseData);
     });
-
-   
 });
 
 
@@ -114,6 +114,27 @@ router.get('/user/logout', (req, res, next) => {
     req.cookies.set('userInfo', null);
     res.json(responseData);
     
+});
+
+/**
+ * 评论提交
+ */
+router.post('/comments/post', (req, res, next) => {
+    // 内容的id
+    var contentId = req.body.contentId || '';
+    var postData = {
+        username: req.userInfo.username,
+        postTime: new Date(),
+        content: req.body.content
+    };
+    // 查询当前这篇内容的信息
+    Content.findOne({_id: contentId}).then((content) => {
+        content.comments.push(postData);
+        return content.save();
+    }).then((newContent) => {
+        responseData.message = '评论成功';
+        res.json(responseData);
+    });
 });
 
 module.exports = router;

@@ -1,1 +1,55 @@
-body {background: red;}
+/* reset */
+* { margin: 0; padding: 0 }
+a { text-decoration: none; }
+em { font-style:normal; }
+li { list-style:none; }
+body {font-size:12px; font-family:"微软雅黑";}
+/* end reset */
+
+
+/* public */
+.fl { float:left; }
+.fr { float:right; }
+.clear { zoom:1; }
+.clear:after{ content:''; display:block; clear:both; }
+
+/* end public */
+
+
+/* layout */
+body { background-color:#eaeaea; }
+#header {height:194px; background:url(../img/header.png) no-repeat;}
+#nav { height:51px; background-color: #fefefe;  text-align: center; border-bottom: 3px solid #e1e1e1;} 
+#nav a {display: inline-block; padding: 0 18px; height:50px; line-height: 50px; color:#734987; }
+#nav .active, #nav a:hover {border-bottom: 3px solid #c48d62;}
+
+.main { padding-top: 33px; }
+
+
+.rightBox {width:310px; margin-right: 150px}
+.leftBox {width:645px; margin-left: 150px; }
+.leftBox .blog, .blog-content, .rightBox .section{ margin-bottom: 25px; background-color: #fefefe; border:1px solid #e9e9e9;}
+.blog { height:215px; padding: 0 30px; }
+.blog h1 { text-align: center; font-size: 24px; padding-top:30px; height:42px; line-height:42px; color:#725f5f;}
+.blog .info { height: 40px; line-height: 40px; text-align: center; font-size: 14px; padding-bottom:10px; }
+.blog .info span { color:#2a97bb; }
+.blog .description { padding-bottom: 10px; height:26px; line-height:26px; font-size:16px; }
+.blog .btn { background-color:#e67d23; padding:8px 15px; width:60px; text-align:center;  }
+.blog .btn a { color:#fefefe; font-size:12px; }
+
+.blog-content { padding: 0 30px 30px 30px; }
+.blog-content h1 { text-align: center; font-size: 24px; padding-top:30px; height:42px; line-height:42px; color:#725f5f;}
+.blog-content .info { height: 40px; line-height: 40px; text-align: center; font-size: 14px; padding-bottom:10px; }
+.blog-content .info span { color:#2a97bb; }
+.blog-content .description { padding-bottom: 10px; height:26px; line-height:26px; font-size:16px; }
+.blog-content .btn { background-color:#e67d23; padding:8px 15px; width:60px; text-align:center;  }
+.blog-content .btn a { color:#fefefe; font-size:12px; }
+
+.page { margin-bottom:30px; height:50px; line-height: 50px; background-color:#fefefe; text-align:center; }
+.page li { display: inline-block; }
+.page .previous { float:left; padding-left:20px; }
+.page .next { float: right; padding-right:20px; }
+.page a { color:#000; }
+
+.section { padding: 17px 26px 26px; }
+.section .title {height:28px; line-height:28px; color:#000; border-bottom:2px solid #e9e9e9;}

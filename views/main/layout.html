@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>首页</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/css/main.css"/>
+    <script type="text/javascript" src="/public/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/index.js"></script> 
+</head>
+<body>
+	<div id="header"></div>
+	<div id="nav">
+		{% if category == '' %}
+		<a class="active" href="/">首页</a>
+		{% else %}
+		<a href="/">首页</a>
+		{% endif %}
+		{% for cate in categories %}
+			{% if category == cate.id %}
+			<a class="active" href="/?category={{cate.id}}">{{cate.name}}</a>
+			{% else %}
+			<a href="/?category={{cate.id}}">{{cate.name}}</a>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<div class="main">
+		
+		<div class="leftBox fl">
+			{% block content %}{% endblock %}
+		</div>
+
+		<div class="rightBox fr">
+			{% if userInfo._id %}
+			<div class="section" id="userInfo">
+				<div class="title"><span>用户信息</span></div>
+				<div class="content">
+					<p><span class="username">{{userInfo.username}}</span></p>
+					{% if userInfo.isAdmin %}
+					<p><span class="info">你好，管理员！</span><a href="/admin">点击这里进入管理</a></p>
+					{% else %}
+					<p><span class="info">你好，欢迎光临我的博客！</span></p>
+					{% endif %}
+					<p><a id="logout" href="javascript:;">退出</a></p>
+				</div>
+			</div>
+			{% else %}
+			<div class="section" id="loginBox">
+				<div class="title">登录</div>
+				<div class="content">
+					<p>
+						<span>用户名：</span>
+						<input placeholder="请填写用户名" type="text" name="username" value="">
+					</p>
+					<p>
+						<span>密码：</span>
+						<input placeholder="请填写密码" type="password" name="password" value="">
+					</p>
+					<input class="btn" type="submit" value="登录">
+					<p class="text">还没注册？<a href="javascript:;">马上注册</a></p>
+					<p class="colWarning textCenter"></p>
+				</div>
+				
+			</div>
+			
+			<div class="section" id="registerBox" style="display: none">
+				<div class="title">注册</div>
+				<div class="content">
+					<p>
+						<span>用户名：</span>
+						<input type="text" name="username" value="">
+					</p>
+					<p>
+						<span>密码：</span>
+						<input type="password" name="password" value="">
+					</p>
+					<p>
+						<span>确认：</span>
+						<input type="password" name="repassword" value="">
+					</p>
+					<input class="btn" type="submit" value="注册">
+					<p class="text textRight">已有账号？<a href="javascript:;">马上登录</a></p>
+					<p class="colWarning textCenter"></p>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	
+	
+</body>
+</html>
