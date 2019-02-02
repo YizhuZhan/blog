@@ -1,3 +1,4 @@
+var comments = [];
 // 每次加载页面后都查询并展示已有评论
 $.ajax({
     type: 'POST',
@@ -6,7 +7,8 @@ $.ajax({
         contentId: $('#contentId').val()
     },
     success: (result) => {
-        renderComment(result.data);
+        comments = result.data;
+        renderComment(comments);
     }
 });
 
@@ -22,21 +24,55 @@ $('#messageBtn').on('click', () => {
         success: (result) => {
             if(!result.code) {
                 $('#messageContent').val('');
-                renderComment(result.data);
+                comments = result.data;
+                renderComment(comments);
             }
         }
     });
 });
 
+/**
+ * 评论分页展示
+ */
+var page = 1;
+var perPage = 4;
+
+$('.previous').on('click', () => {
+    page--;
+    renderComment(comments);
+});
+$('.next').on('click', () => {
+    page++;
+    renderComment(comments);
+});
 function renderComment(comments) {
-    // console.log(comments);
+    // 每次刷新或者提交评论，均更新分页信息
+    var commentsCount = comments.length;
+    var pages = Math.max(Math.ceil(commentsCount / perPage), 1);
+    if(page <= 1) {
+        page = 1;
+        $('.previous').eq(0).html('没有上一页了');
+    } else {
+        $('.previous').eq(0).html('上一页');
+    }
+    if(page >= pages) {
+        page = pages;
+        $('.next').eq(0).html('没有下一页了');
+    } else {
+        $('.next').eq(0).html('下一页');
+    }
+    var start = (page - 1) * perPage;
+    var end = Math.min(start + perPage - 1, commentsCount - 1);
+    $('#curPage').html(page);
+    $('#pages').html(pages);
+
     var html = '';
-    comments.forEach(comment => {
+    for(let i = start; i <= end; i++) {
+    // comments.forEach(comment => {
         html += `<div class="messageBox">
-        <p class="messageInfo clear"><span class="fl">${comment.username}</span><span class="fr">${comment.postTime}</span></p>
-        <p>${comment.content}</p>
+        <p class="messageInfo clear"><span class="fl">${comments[i].username}</span><span class="fr">${comments[i].postTime}</span></p>
+        <p>${comments[i].content}</p>
     </div>`
-    });
-    console.log($('#messageList'), html);
+    };
     $('#messageList').html(html);
 }

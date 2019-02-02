@@ -20,13 +20,15 @@
     {% else %}
     <p class="info login-info">您还没有登录，请先登录！</p>
     {% endif %}
+    {% if content.comments.length == 0 %}
     <p class="info message-info">还没有留言</p>
+    {% endif %}
     <div id="messageList">
         
     </div>
-    <div class="pager clear">
-        <span class="fl" href="">上一页</span><span><em>{{page}}</em> / <em>{{maxPage}}</em></span><span class="fr">下一页</span>
-    </div>
+    <ul class="pager clear">
+        <li class="fl previous">上一页</li><li><span id="curPage"></span> / <span id="pages"></span></li><li class="fr next">下一页</li>
+    </ul>
 </div>
 
 <script src="/public/js/comment.js"></script>

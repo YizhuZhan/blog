@@ -65,3 +65,5 @@ body { background-color:#eaeaea; }
 .messageInfo { margin-bottom:5px; }
 .info { margin: 10px 0; }
 .login-info { padding:5px 0; background-color: #f37a11; text-align: center; }
+.pager { text-align:center; }
+.pager li { display: inline-block; }
