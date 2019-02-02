@@ -67,9 +67,9 @@ router.get('/views', (req, res, next) => {
     Content.findOne({
         _id: contentId
     }).then((content) => {
+        content.views++; // 阅读数
+        content.save(); // 不需要和渲染模板同步进行，不需要后续处理
         data.content = content;
-        content.views++;
-        content.save(); // 不许要和渲染模板同步进行，不需要后续处理
         res.render('main/view', data);
     });
 });

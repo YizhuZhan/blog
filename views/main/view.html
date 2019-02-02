@@ -4,25 +4,28 @@
 
 <div class="blog-content">
     <h1>{{content.title}}</h1>
-    <p class="info">作者：<span>{{content.user.username}}</span> - 时间：<span>{{content.addTime|date('Y年m月d日 H时i分s秒')}}</span> - 阅读: <span>{{content.views}}</span> - 评论：<span>{{content.comments}}</span></p>
+    <p class="info">作者：<span>{{content.user.username}}</span> - 时间：<span>{{content.addTime|date('Y年m月d日 H时i分s秒')}}</span> - 阅读: <span>{{content.views}}</span> - 评论：<span>{{content.comments.length}}</span></p>
     <p class="description">{{content.description}}</p>
     <div class="article">{{content.content}}</div>
 </div>
 <div class="message">
-    <h3><strong>评论</strong><span>一共有<em>0</em>条评论</span></h3>
+    <h3 class="clear"><strong class="fl">评论</strong><span class="fr">一共有<em>{{content.comments.length}}</em>条评论</span></h3>
     {% if userInfo._id %}
-    <p><span>admin</span></p>
-    <p>
-        <textarea id="messageContent"></textarea><button id="messageBtn">提交</button>
+    <p class="info"><span>admin</span></p>
+    <p class="clear">
+        <textarea class="fl" id="messageContent"></textarea>
+        <input type="hidden" id="contentId" value={{content.id}}>
+        <button class="fr" id="messageBtn">提交</button>
     </p>
     {% else %}
-    <p>你还没有登录，请先登录！</p>
+    <p class="info login-info">您还没有登录，请先登录！</p>
     {% endif %}
-        <!-- 判断是否有留言 -->
-        <p>还没有留言</p>
-
-    <div class="messageList">
-        <p>还没有留言</p>
+    <p class="info message-info">还没有留言</p>
+    <div id="messageList">
+        
+    </div>
+    <div class="pager clear">
+        <span class="fl" href="">上一页</span><span><em>{{page}}</em> / <em>{{maxPage}}</em></span><span class="fr">下一页</span>
     </div>
 </div>
 

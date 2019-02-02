@@ -1,6 +1,8 @@
 /* reset */
 * { margin: 0; padding: 0 }
 a { text-decoration: none; }
+textarea { resize:none; }
+textarea, button { outline:none; }
 em { font-style:normal; }
 li { list-style:none; }
 body {font-size:12px; font-family:"微软雅黑";}
@@ -53,3 +55,13 @@ body { background-color:#eaeaea; }
 
 .section { padding: 17px 26px 26px; }
 .section .title {height:28px; line-height:28px; color:#000; border-bottom:2px solid #e9e9e9;}
+
+.message { background-color:#fefefe; padding:30px 45px 20px 45px; margin-bottom:30px; }
+#messageContent, #messageBtn { display:inline-block; height:60px; border: 2px solid #2a97bb; }
+#messageContent { width: 500px; }
+#messageBtn { width:47px; background-color: #2a97bb; color:#fefefe; }
+/* #contentId { height:0;width:0;} */
+.messageBox { padding:10px 0; } */
+.messageInfo { margin-bottom:5px; }
+.info { margin: 10px 0; }
+.login-info { padding:5px 0; background-color: #f37a11; text-align: center; }

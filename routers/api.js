@@ -5,7 +5,6 @@ var Content = require('../models/Contents');
 
 // 统一放回格式
 var responseData;
-
 // invoked for any requests passed to this router
 router.use((req, res, next) => {
     responseData = {
@@ -14,6 +13,34 @@ router.use((req, res, next) => {
     };
     next();
 });
+
+
+// 对Date的扩展，将 Date 转化为指定格式的String   
+// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，   
+// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)   
+// 例子：   
+// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423   
+// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18   
+Date.prototype.Format = function(fmt)   
+{ //author: meizz   
+var o = {   
+    "M+" : this.getMonth()+1,                 //月份   
+    "d+" : this.getDate(),                    //日   
+    "h+" : this.getHours(),                   //小时   
+    "m+" : this.getMinutes(),                 //分   
+    "s+" : this.getSeconds(),                 //秒   
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+    "S"  : this.getMilliseconds()             //毫秒   
+};   
+if(/(y+)/.test(fmt))   
+    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+for(var k in o)   
+    if(new RegExp("("+ k +")").test(fmt))   
+fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+return fmt;   
+}
+
+
 /**
  * 用户注册
  * 	注册逻辑：
@@ -113,26 +140,46 @@ router.post('/user/login', (req, res, next) => {
 router.get('/user/logout', (req, res, next) => {
     req.cookies.set('userInfo', null);
     res.json(responseData);
-    
 });
+
+/**
+ * 获取指定文章的所有评论
+ */
+router.post('/comment', (req, res) => {
+    var contentId = req.body.contentId || '';
+    Content.findOne({
+        _id:contentId
+    }).then((content) => {
+        responseData.message = '评论获取成功';
+        responseData.data = content.comments.reverse();
+        res.json(responseData);
+    });
+})
 
 /**
  * 评论提交
  */
-router.post('/comments/post', (req, res, next) => {
+router.post('/comments/post', (req, res) => {
     // 内容的id
     var contentId = req.body.contentId || '';
+    
     var postData = {
         username: req.userInfo.username,
-        postTime: new Date(),
+        postTime: new Date().Format("yyyy年MM月dd日 hh:mm:ss"),
         content: req.body.content
     };
     // 查询当前这篇内容的信息
     Content.findOne({_id: contentId}).then((content) => {
         content.comments.push(postData);
-        return content.save();
+        // if(postData.comment && postData.comment != '') {
+            return content.save();
+        // } else {
+        //     return Promise.reject();
+        // }
+        
     }).then((newContent) => {
         responseData.message = '评论成功';
+        responseData.data = newContent.comments.reverse(); // 数组反转，最新在前面
         res.json(responseData);
     });
 });
